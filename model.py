@@ -14,10 +14,10 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 
 
-def encode(x: str, stoi: dict):
-    if len(x.split()) % 2 == 1:
-        x += " "
-    x = [x[i : i + 2] for i in range(0, len(x), 2)]
+def encode(x:str):
+    if len(x) % 2 == 1:
+        x = x + ' ' # adding 1 space to even the string length
+    x = [x[i:i+2] for i in range(0, len(x), 2)]
     return [stoi[i] for i in x]
 
 
@@ -32,18 +32,19 @@ def decode(x, itos: dict):
     return "".join(itos[i] for i in x).strip()
 
 
-def create_dataset(numbers, window_size):
-    n_windows = len(numbers) - window_size
 
-    X = np.array([numbers[i : i + window_size] for i in range(n_windows)])
-    y = np.array(
-        [numbers[i + 1 : i + window_size + 1] for i in range(n_windows)]
-    )  # shifted by one value
+def create_dataset(numbers:list, window_size:int):
+    n_numbers = len(numbers)
+    n_windows = n_numbers - window_size
 
-    print("Number of windows:", len(X))
-    print("Number of corresponding outputs:", len(y), end="\n")
+    X = np.lib.stride_tricks.sliding_window_view(numbers[:-1], (window_size,))
+    y = np.lib.stride_tricks.sliding_window_view(numbers[1:], (window_size,))
+
+    print("Number of windows:", X.shape[0])
+    print("Number of corresponding outputs:", y.shape[0], end='\n')
 
     return X, y
+
 
 
 class CustomDataset(Dataset):
