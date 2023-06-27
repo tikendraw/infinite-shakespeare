@@ -71,6 +71,15 @@ if __name__ == "__main__":
     RESERVED_TOKEN = 0  # for unknown token
 
     text, stoi, itos = make_data1()
+    
+    print('saving components...')
+    os.makedirs('components', exist_ok=True)
+    
+    with open("./components/itos.bin","wb") as f:
+        pickle.dump(itos, f)
+    
+    with open("./components/stoi.bin","wb") as f:
+        pickle.dump(stoi,f)
 
     enc_text = encode(text, stoi)
     x, y = create_dataset(enc_text, config.block_size)
@@ -82,9 +91,9 @@ if __name__ == "__main__":
     gpt = GPT(config, itos).to(config.device)
 
     # loading weights if exist
-    if os.path.isfile("/model_weights/gpt.pth"):
+    if os.path.isfile("./model_weights/gpt.pth"):
         try:
-            gpt.load_state_dict(torch.load("/model_weights/gpt.pth"))
+            gpt.load_state_dict(torch.load("./model_weights/gpt.pth"))
         except:
             print("loading weights failed! ")
     # Training
