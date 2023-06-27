@@ -181,11 +181,12 @@ class Block(nn.Module):
 
 # GPT
 class GPT(nn.Module):
-    def __init__(self, config):
+    def __init__(self, config, itos):
         super().__init__()
         assert config.vocab_size is not None
         assert config.block_size is not None
         self.config = config
+        self.itos = itos
 
         self.transformer = nn.ModuleDict(
             dict(
@@ -318,7 +319,7 @@ class GPT(nn.Module):
     @torch.no_grad()
     def write(self, *args, **kwargs):
         out = self.generate(*args, **kwargs).tolist()
-        return [decode(i, itos) for i in out]
+        return [decode(i, self.itos) for i in out]
 
 
 def training_loop(model, data, optimizer, train_step: int = None, device: str = "cpu"):

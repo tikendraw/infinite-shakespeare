@@ -60,8 +60,6 @@ def make_data1():
     return text, stoi, itos
 
 
-import contextlib
-
 if __name__ == "__main__":
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print("Running on Device: ", device)
@@ -81,9 +79,7 @@ if __name__ == "__main__":
     dataset = CustomDataset(x, y)
     dataloader = DataLoader(dataset, batch_size=config.batch_size, shuffle=True)
 
-    gpt = GPT(config).to(config.device)
-    gpt.itos = itos
-    gpt.stoi = stoi
+    gpt = GPT(config, itos).to(config.device)
 
     # loading weights if exist
     if os.path.isfile("/model_weights/gpt.pth"):
@@ -102,11 +98,11 @@ if __name__ == "__main__":
             gpt.to(config.device),
             dataloader,
             optimizer=optimizer,
-            train_step=10,
+            train_step=100,
             device=config.device,
         )
 
-        if epoch % epochs // 11 == 0:
+        if epoch % 10 == 0:
             print(f"Epoch:  {epoch:4}/{epochs}  |  Loss:  {epoch_loss:.5f}")
 
     print("Training Done!")
