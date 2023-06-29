@@ -172,14 +172,4 @@ set_background("./components/spfitdark.jpg")
 
 if __name__ == "__main__":
     st.title('ShakespeareGPT')
-    page_bg_img = '''
-    <style>
-    body {
-    background-image: url("https://raw.githubusercontent.com/tikendraw/infinite-shakespeare/main/components/spfitdark.jpg");
-    background-size: cover;
-    }
-    </style>
-    '''
-
-    # st.markdown(page_bg_img, unsafe_allow_html=True)
     main()
