@@ -71,15 +71,15 @@ if __name__ == "__main__":
     RESERVED_TOKEN = 0  # for unknown token
 
     text, stoi, itos = make_data1()
-    
-    print('saving components...')
-    os.makedirs('components', exist_ok=True)
-    
-    with open("./components/itos.bin","wb") as f:
+
+    print("saving components...")
+    os.makedirs("components", exist_ok=True)
+
+    with open("./components/itos.bin", "wb") as f:
         pickle.dump(itos, f)
-    
-    with open("./components/stoi.bin","wb") as f:
-        pickle.dump(stoi,f)
+
+    with open("./components/stoi.bin", "wb") as f:
+        pickle.dump(stoi, f)
 
     enc_text = encode(text, stoi)
     x, y = create_dataset(enc_text, config.block_size)
