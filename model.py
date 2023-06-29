@@ -14,7 +14,7 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 
 
-def encode(x:str):
+def encode(x:str, stoi:dict):
     if len(x) % 2 == 1:
         x = x + ' ' # adding 1 space to even the string length
     x = [x[i:i+2] for i in range(0, len(x), 2)]
@@ -25,9 +25,9 @@ def replace_numbers_greater_than(numbers, limit: int, replace_with: int = 0):
     return [num if 0 < num <= limit else replace_with for num in numbers]
 
 
-def decode(x, itos: dict):
+def decode(x, itos: dict, config):
     x = replace_numbers_greater_than(
-        x, limit=VOCAB_SIZE - 1, replace_with=RESERVED_TOKEN
+        x, limit=config.vocab_size - 1, replace_with=config.reserved_token
     )
     return "".join(itos[i] for i in x).strip()
 
@@ -217,7 +217,7 @@ class GPT(nn.Module):
                 )
 
         # report number of parameters
-        print("number of parameters: %.2fM" % (self.get_num_params() / 1e6,))
+        # print("number of parameters: %.2fM" % (self.get_num_params() / 1e6,))
 
     def get_num_params(self, non_embedding=True):
         """
@@ -320,7 +320,7 @@ class GPT(nn.Module):
     @torch.no_grad()
     def write(self, *args, **kwargs):
         out = self.generate(*args, **kwargs).tolist()
-        return [decode(i, self.itos) for i in out]
+        return [decode(i, self.itos, self.config) for i in out]
 
 
 def training_loop(model, data, optimizer, train_step: int = None, device: str = "cpu"):

@@ -16,3 +16,4 @@ class GPTConfig:
     device: str = "cuda" if torch.cuda.is_available() else "cpu"
     learning_rate: int = 1e-2
     epochs: int = 100
+    reserved_token: int = 0
