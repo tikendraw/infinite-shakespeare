@@ -44,10 +44,10 @@ star = """<!-- Place this tag in your head or just before your close body tag. -
 
 
 def load_pickles():
-    with open(Path(__file__).parent / "components/itos.bin", "rb") as f:
+    with open("./components/itos.bin", "rb") as f:
         itos = pickle.load(f)  # index to string lookup
 
-    with open(Path(__file__).parent / "components/stoi.bin", "rb") as f:
+    with open("./components/stoi.bin", "rb") as f:
         stoi = pickle.load(f)  # string to index lookup
 
     return itos, stoi
@@ -60,13 +60,13 @@ def load_model(itos):
     gpt = GPT(config, itos=itos).to(config.device)
 
     # Load weights (if exists)
-    if os.path.isfile(Path(__file__).parent / "model_weights/gpt.pth"):
+    if os.path.isfile("./model_weights/gpt.pth"):
         try:
             gpt.load_state_dict(
-                torch.load(Path(__file__).parent / "model_weights/gpt.pth")
+                torch.load("./model_weights/gpt.pth")
                 if device == "cuda"
                 else torch.load(
-                    Path(__file__).parent / "model_weights/gpt.pth",
+                    "./model_weights/gpt.pth",
                     map_location=torch.device("cpu"),
                 )
             )
@@ -110,18 +110,6 @@ def typing_effect(x):
 
 
 def main():
-    st.markdown(
-        """
-        <style>
-        .textarea {
-            background-color: transparent;
-            padding: 20px;
-            border: 1px solid gray;
-        }
-        </style>
-    """,
-        unsafe_allow_html=True,
-    )
 
     col1, col2, col12 = st.columns([4, 1.3, 1.5])
 
@@ -171,16 +159,6 @@ def main():
             x.to(config.device), max_new_tokens=max_len, temperature=temperature
         )
 
-        st.markdown(
-            """
-            <style>
-            div.stText {
-                font-size: 80px;
-            }
-            </style>
-        """,
-            unsafe_allow_html=True,
-        )
 
         typing_effect(out[0])
 
@@ -188,7 +166,7 @@ def main():
         st.error(disclaimer)
 
 
-set_background(Path(__file__).parent / "components/spfitdark.jpg")
+set_background("./components/spfitdark.jpg")
 
 if __name__ == "__main__":
     st.title('ShakespeareGPT')
