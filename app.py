@@ -191,4 +191,5 @@ def main():
 set_background(Path(__file__).parent / "components/spfitdark.jpg")
 
 if __name__ == "__main__":
+    st.title('ShakespeareGPT')
     main()
