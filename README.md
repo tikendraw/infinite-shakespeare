@@ -28,11 +28,17 @@ Once the model is trained, it can be used to generate Shakespearean-style text. 
 ``` 
 pip install -r requirements.txt
 ```
-2. Run the app
+2. Run the app (CLI or WebApp)
+  a. CLI
 ```
 python3 shakespere-cli.py 'how you doin' [--tokens N] [--temperature T]
 
 ```
+   b. Web App
+```
+streamlit run app.py
+```
+
 ### Optional Arguments
 The program provides the following optional arguments to customize the generation process:
 
