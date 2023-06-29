@@ -65,7 +65,7 @@ def load_model(itos):
             gpt.load_state_dict( torch.load("./model_weights/gpt.pth") if device == "cuda" else torch.load("./model_weights/gpt.pth", map_location=torch.device("cpu")))
             print("Weights loaded!")
         except Exception as e:
-            st.error("Loading weights failed!")
+            # st.error("Loading weights failed!")
             st.text(e)
             print(e)
 
