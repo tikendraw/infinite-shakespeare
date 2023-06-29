@@ -133,7 +133,9 @@ def main():
         generate = st.button("Generate")
 
     with col4:
-        if code := st.button("Code/Github"):
+        code = st.button("Code/Github")
+        
+        if code :
             webbrowser(github_url)
 
     with col5:
@@ -170,4 +172,14 @@ set_background("./components/spfitdark.jpg")
 
 if __name__ == "__main__":
     st.title('ShakespeareGPT')
+    page_bg_img = '''
+    <style>
+    body {
+    background-image: url("https://raw.githubusercontent.com/tikendraw/infinite-shakespeare/main/components/spfitdark.jpg");
+    background-size: cover;
+    }
+    </style>
+    '''
+
+    # st.markdown(page_bg_img, unsafe_allow_html=True)
     main()
