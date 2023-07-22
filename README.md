@@ -20,7 +20,7 @@ The training process involves iterating over the entire training corpus multiple
 Once the model is trained, it can be used to generate Shakespearean-style text. Given an initial prompt or seed text, the model predicts the next token based on the learned language patterns and context. This process is repeated iteratively to generate a sequence of tokens, resulting in a coherent piece of text that resembles Shakespeare's writing.
 
 
-<img src='./components/output.jpg' width=350px, height = 300px>
+<img src='./components/output.jpg'>
 
 ## RUN
 
