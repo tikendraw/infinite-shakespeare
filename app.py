@@ -1,4 +1,4 @@
-import streamlit as st
+/import streamlit as st
 from model import encode, GPT
 from config import GPTConfig
 import os, random, pickle
@@ -62,7 +62,10 @@ def load_model(itos):
     # Load weights (if exists)
     if os.path.isfile("./model_weights/gpt.pth"):
         try:
-            gpt.load_state_dict( torch.load("./model_weights/gpt.pth") if device == "cuda" else torch.load("./model_weights/gpt.pth", map_location=torch.device("cpu")))
+			if device=='cuda':
+            	gpt.load_state_dict( torch.load("./model_weights/gpt.pth"))
+			else: 
+				gpt.load_state_dict(torch.load("./model_weights/gpt.pth", map_location=torch.device("cpu")))
             print("Weights loaded!")
         except Exception as e:
             # st.error("Loading weights failed!")
